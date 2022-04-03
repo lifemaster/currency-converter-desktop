@@ -1,5 +1,6 @@
 ﻿using System;
 using System.Collections.Generic;
+using System.Net;
 using System.Net.Http;
 using System.Windows.Forms;
 using System.Xml;
@@ -41,6 +42,8 @@ namespace CurrencyExchangerDesktop
 
             try
             {
+                ServicePointManager.SecurityProtocol = SecurityProtocolType.Tls12 | SecurityProtocolType.Tls11 | SecurityProtocolType.Tls;
+
                 HttpResponseMessage response = await client.GetAsync($"https://bank.gov.ua/NBUStatService/v1/statdirectory/exchange?date={selectedDate}&valcode={selectedCurrency}");
                 response.EnsureSuccessStatusCode();
                 string responseBody = await response.Content.ReadAsStringAsync();
